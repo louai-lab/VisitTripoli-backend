@@ -11,7 +11,7 @@ app.use(express.json())
 
 
 try{
-    app.listen(process.env.PORT, () =>{
+    app.listen(process.env.PORT,async () =>{
     console.log('listening on port ',process.env.PORT)
     })
 } catch{
@@ -19,7 +19,7 @@ try{
 }
 
 try{
-    mongoose.connect(process.env.MONG_ULI,{
+   await mongoose.connect(process.env.MONG_ULI,{
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
