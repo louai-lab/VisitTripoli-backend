@@ -4,7 +4,7 @@ import {
   httpAddNewTour,
   httpUpdateTour,
   httpDeleteTour,
-} from "./tour.controller.js";
+} from "../controller/tour.controller.js";
 import multer from "multer";
 import path from "path";
 // const fs = require("fs");

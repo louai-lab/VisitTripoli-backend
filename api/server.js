@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
-const PORT = 4000;
-import { toursRouter } from "../Tour/controller/tour.router.js";
+// const PORT = 4000;
+import { toursRouter } from "./route/tour.router.js";
 
 // express app
 const app = express();
@@ -26,8 +26,8 @@ async function startServer() {
     useUnifiedTopology: true,
   });
 
-  app.listen(PORT, () => {
-    console.log("listening on port: " + PORT);
+  app.listen(process.env.PORT, () => {
+    console.log("listening on port: " + process.env.PORT);
   });
 }
 

@@ -26,12 +26,15 @@ async function saveTour(tour) {
 
 async function addNewTour(tour) {
   const newid = (await getLatestId()) + 1;
+  console.log(newid);
   const newTour = Object.assign(tour, { id: newid });
   await saveTour(newTour);
 }
 
 async function updateTour(tour) {
-  await saveTour(tour);
+  const newid = (await getLatestId()) + 1;
+  const newTour = Object.assign(tour, { id: newid });
+  await saveTour(newTour);
 }
 
 async function deleteTour(id) {
