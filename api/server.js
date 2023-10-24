@@ -1,16 +1,15 @@
 import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
 
-const PORT = 4000;
-import { toursRouter } from "../Tour/controller/tour.router.js";
+import mongoose from "mongoose";
+
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // express app
 const app = express();
 app.use(express.json());
 
-app.use("/tours", toursRouter);
 
 async function startServer() {
   mongoose.connection.once("open", () => {
@@ -26,8 +25,8 @@ async function startServer() {
     useUnifiedTopology: true,
   });
 
-  app.listen(PORT, () => {
-    console.log("listening on port: " + PORT);
+  app.listen(process.env.PORT, () => {
+    console.log("listening on port: " + process.env.PORT);
   });
 }
 
