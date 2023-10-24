@@ -1,24 +1,26 @@
 import Location from "../models/locations.model.js"
 
 export const createLocation = async (req,res,next)=>{
-    const {id, title, address, timeFromCenter, googleRating, entranceFee, description, smallDescription, geoLocation, images, video} = req.body;
-    const newLocation = new Location({
-        id, 
-        title, 
-        address, 
-        timeFromCenter, 
-        googleRating, 
-        entranceFee, 
-        description, 
-        smallDescription, 
-        geoLocation, 
-        images, 
-        video
-    });
-
+    const {id, title, address, timeFromCenter, googleRating, entranceFee, description, smallDescription, geoLocation, video} = req.body;
+    // const {images} = req.file.path;
+    // const addedImage = images;
+    // const newLocation = new Location({
+    //     id, 
+    //     title, 
+    //     address, 
+    //     timeFromCenter, 
+    //     googleRating, 
+    //     entranceFee, 
+    //     description, 
+    //     smallDescription, 
+    //     geoLocation, 
+    //     images, 
+    //     video
+    // });
+return res.json({"images": req.files})
     try{
         await newLocation.save();
-        res.status(201).json({message: "Location created successfully!"})
+        res.status(201).json(newLocation)
     } catch (error) {
         next(error);
     }

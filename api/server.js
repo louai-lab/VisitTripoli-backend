@@ -9,13 +9,13 @@ dotenv.config();
 // express app
 const app = express()
 app.use(express.json())
-// const Port = 3400;
+const Port = 3404;
 
 try{
-    app.listen(process.env.PORT, () =>{
-        // app.listen(Port, () =>{
-    console.log('listening on port ',process.env.PORT)
-    // console.log('listening on port ',Port)
+    // app.listen(process.env.PORT, () =>{
+        app.listen(Port, () =>{
+    // console.log('listening on port ',process.env.PORT)
+    console.log('listening on port ',Port)
     })
 } catch{
     console.error('Error listening to port');

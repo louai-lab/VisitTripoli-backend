@@ -37,9 +37,10 @@ const locationSchema = new mongoose.Schema({
     type: [Number],
     required: true,
   },
-  images: { 
-    type: [String]
-  },
+  images:[{ 
+    type: String,
+    required: true,
+  }],
   video: {
     type: [String]
   }
