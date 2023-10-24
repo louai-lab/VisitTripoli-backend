@@ -2,7 +2,7 @@ import toursDb from "./tour.mongo.js";
 
 let defaultId = 0;
 async function getAllTours() {
-  return await toursDb.find({}, { _id: 0, __v: 0 });
+  return await toursDb.find({}, { _id: 0, __v: 0 }).sort({ title: 1 });
 }
 async function getLatestId() {
   const lastId = await toursDb.findOne().sort("-id");
@@ -26,15 +26,16 @@ async function saveTour(tour) {
 
 async function addNewTour(tour) {
   const newid = (await getLatestId()) + 1;
-  console.log(newid);
   const newTour = Object.assign(tour, { id: newid });
   await saveTour(newTour);
 }
 
 async function updateTour(tour) {
-  const newid = (await getLatestId()) + 1;
-  const newTour = Object.assign(tour, { id: newid });
-  await saveTour(newTour);
+  try {
+    await toursDb.updateOne({ id: tour.id }, { ...tour }, { upsert: true });
+  } catch (err) {
+    console.error(`could not save tour ${err}`);
+  }
 }
 
 async function deleteTour(id) {

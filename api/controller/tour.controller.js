@@ -25,6 +25,9 @@ async function httpAddNewTour(req, res) {
 async function httpUpdateTour(req, res) {
   const tour = req.body;
   const image = req.file.path;
+  if (!tour.id) {
+    return res.status(400).json({ error: "enter the id" });
+  }
   tour.image = image;
   await updateTour(tour);
   return res.status(200).json(tour);
