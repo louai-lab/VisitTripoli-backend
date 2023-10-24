@@ -45,6 +45,6 @@ const locationSchema = new mongoose.Schema({
   }
 });
 
-const Tour = mongoose.model("Tour", tourSchema);
+const Location = mongoose.model("Location", locationSchema);
 
-export default Tour;
+export default Location;
