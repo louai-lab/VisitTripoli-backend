@@ -30,9 +30,17 @@ async function addNewTour(tour) {
   await saveTour(newTour);
 }
 
+async function findId(id) {
+  const found = await toursDb.findOne({ id: id });
+  if (found) return true;
+  else {
+    return false;
+  }
+}
+
 async function updateTour(tour) {
   try {
-    await toursDb.updateOne({ id: tour.id }, { ...tour }, { upsert: true });
+    await toursDb.updateOne({ id: tour.id }, { ...tour });
   } catch (err) {
     console.error(`could not save tour ${err}`);
   }
@@ -46,4 +54,4 @@ async function deleteTour(id) {
   return false;
 }
 
-export { getAllTours, addNewTour, updateTour, deleteTour };
+export { getAllTours, addNewTour, updateTour, deleteTour, findId };

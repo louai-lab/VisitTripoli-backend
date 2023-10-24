@@ -1,6 +1,7 @@
 import {
   getAllTours,
   addNewTour,
+  findId,
   updateTour,
   deleteTour,
 } from "../models/tour.model.js";
@@ -26,7 +27,10 @@ async function httpUpdateTour(req, res) {
   const tour = req.body;
   const image = req.file.path;
   if (!tour.id) {
-    return res.status(400).json({ error: "enter the id" });
+    return res.status(400).json({ error: "enter an id" });
+  }
+  if (!(await findId(tour.id))) {
+    return res.status(400).json({ error: "id not found" });
   }
   tour.image = image;
   await updateTour(tour);

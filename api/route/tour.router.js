@@ -5,27 +5,9 @@ import {
   httpUpdateTour,
   httpDeleteTour,
 } from "../controller/tour.controller.js";
-import multer from "multer";
-import path from "path";
-// const fs = require("fs");
+import upload from "../utils/multer.js";
 
 const toursRouter = express.Router();
-
-// const uploadDirectory = "images";
-
-// if (!fs.existsSync(uploadDirectory)) {
-//   fs.mkdirSync(uploadDirectory);
-// }
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
-
-const upload = multer({ storage: storage });
 
 toursRouter.get("/", httpGetAllTours);
 toursRouter.post("/add", upload.single("image"), httpAddNewTour);
