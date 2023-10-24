@@ -1,2 +1,5 @@
-.env
+#Logs
 node_modules
+
+#Editor directories
+.env
