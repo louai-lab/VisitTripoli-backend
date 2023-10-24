@@ -1,4 +1,5 @@
 import express from "express";
+import locationRouter from './routes/locations.routes.js'
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
@@ -8,11 +9,13 @@ dotenv.config();
 // express app
 const app = express()
 app.use(express.json())
-
+// const Port = 3400;
 
 try{
     app.listen(process.env.PORT, () =>{
+        // app.listen(Port, () =>{
     console.log('listening on port ',process.env.PORT)
+    // console.log('listening on port ',Port)
     })
 } catch{
     console.error('Error listening to port');
@@ -33,3 +36,5 @@ app.use((req, res, next) => {
     console.log(req.path, req.method)
     next()
 })
+
+app.use("/api/location", locationRouter)

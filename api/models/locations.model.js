@@ -34,7 +34,7 @@ const locationSchema = new mongoose.Schema({
     required: true,
   },
   geoLocation: {
-    type: String,
+    type: [Number],
     required: true,
   },
   images: { 
@@ -43,7 +43,7 @@ const locationSchema = new mongoose.Schema({
   video: {
     type: [String]
   }
-});
+},{timestamps: true});
 
 const Location = mongoose.model("Location", locationSchema);
 
