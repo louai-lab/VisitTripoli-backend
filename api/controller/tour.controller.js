@@ -1,4 +1,6 @@
 import toursDb from "../models/tour.models.js";
+import fs from "fs";
+import path from "path";
 
 let defaultId = 0;
 
@@ -9,17 +11,17 @@ async function getLatestId() {
   }
   return lastId.id;
 }
-async function saveTour(tour) {
-  try {
-    await toursDb.updateOne(
-      { title: tour.title },
-      { ...tour },
-      { upsert: true }
-    );
-  } catch (err) {
-    console.error(`could not save tour ${err}`);
-  }
+
+function removeImage(image) {
+  fs.unlink(image, (err) => {
+    if (err) {
+      console.log(`we can't delete the image`);
+    } else {
+      console.log("image deleted");
+    }
+  });
 }
+
 async function httpGetAllTours(req, res) {
   let getAllTours = await toursDb
     .find({}, { _id: 0, __v: 0 })
@@ -31,40 +33,78 @@ async function httpAddNewTour(req, res) {
   const tour = req.body;
   const image = req.file.path;
   if (!tour.title || !tour.description || !tour.link) {
+    if (image) {
+      removeImage(image);
+    }
     return res.status(400).json({ error: "missing required property" });
   } else if (!image) {
     return res.status(400).json({ error: "missing image" });
   } else {
     tour.image = image;
     const newid = (await getLatestId()) + 1;
-    const newTour = Object.assign(tour, { id: newid });
-    await saveTour(newTour);
-    return res.status(200).json(tour);
+    let newTour = new toursDb({ ...tour, id: newid });
+    try {
+      let found = await toursDb.findOne({ title: newTour.title });
+      if (!found) {
+        await newTour.save();
+      } else {
+        if (image) {
+          removeImage(image);
+        }
+        return res
+          .status(400)
+          .json({ error: `Duplicated title could not save tour` });
+      }
+    } catch (err) {
+      console.error(`could not save tour ${err}`);
+    }
+    return res.status(200).json(newTour);
   }
 }
 
 async function httpUpdateTour(req, res) {
   const tour = req.body;
-  const image = req.file.path;
+  const newImage = req.file.path;
   const found = await toursDb.findOne({ id: tour.id });
   if (!tour.id) {
+    if (newImage) {
+      removeImage(newImage);
+    }
     return res.status(400).json({ error: "enter an id" });
   }
   if (!found) {
+    if (newImage) {
+      removeImage(newImage);
+    }
     return res.status(400).json({ error: "id not found" });
   }
-  tour.image = image;
+  const oldImage = found.image;
+
   try {
-    await toursDb.updateOne({ id: tour.id }, { ...tour });
+    if (oldImage !== newImage) {
+      tour.image = newImage;
+      await toursDb.updateOne({ id: tour.id }, { ...tour });
+
+      if (oldImage) {
+        removeImage(oldImage);
+      }
+    }
+    return res.status(200).json(tour);
   } catch (err) {
     console.error(`could not save tour ${err}`);
+    if (newImage) {
+      removeImage(newImage);
+    }
+    return res.status(500).json({ error: "server error" });
   }
-  return res.status(200).json(tour);
 }
 
 async function httpDeleteTour(req, res) {
   const found = await toursDb.findOneAndDelete({ id: req.params.id });
   if (found) {
+    if (found.image) {
+      removeImage(found.image);
+    }
     return res.status(200).json("deleted");
   } else {
     return res.status(404).json("Tours not found");

@@ -1,9 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
+// import path, { dirname } from "path";
 import dotenv from "dotenv";
 dotenv.config();
 
-// const PORT = 4000;
 import { toursRouter } from "./route/tour.router.js";
 
 // express app
@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/tours", toursRouter);
+// app.use("/uploads", express.static(path.join(__dirname, "images")));
 
 async function startServer() {
   mongoose.connection.once("open", () => {

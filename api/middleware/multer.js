@@ -1,6 +1,6 @@
 import multer from "multer";
 import path from "path";
-// const fs = require("fs");
+// import fs from "fs";
 
 // const uploadDirectory = "images";
 
@@ -10,7 +10,7 @@ import path from "path";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "imagesTour");
+    cb(null, "images");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
