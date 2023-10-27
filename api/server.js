@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
-import { toursRouter } from "./route/tour.router.js";
+import { toursRouter } from "./routes/tour.router.js";
 
 // express app
 const app = express();
