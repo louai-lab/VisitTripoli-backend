@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 
 import dotenv from "dotenv";
 
+import hotelRouter from "./routes/hotel-route.js"
+
 dotenv.config();
 
 // express app
@@ -19,10 +21,10 @@ async function startServer() {
   mongoose.connection.on("error", (err) => {
     console.error(err);
   });
-
   await mongoose.connect(process.env.MONG_ULI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+
   });
 
   app.listen(process.env.PORT, () => {
@@ -32,8 +34,11 @@ async function startServer() {
 
 startServer();
 
+app.use('/api/hotel', hotelRouter)
+
 //middleware
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
+
