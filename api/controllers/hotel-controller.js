@@ -2,6 +2,8 @@ import Hotel from '../models/hotel-model.js'
 
 import mongoose from 'mongoose'
 
+import fs from "fs"
+
 // get all hotels
 export const getAllHotel = async (req, res) => {
     const hotels = await Hotel.find().sort({createdAt: -1})
@@ -11,10 +13,10 @@ export const getAllHotel = async (req, res) => {
 
 //create a hotel
 export const createHotel = async (req, res) => {
-    const { id, time, rating, link } = req.body
+    const { id, time, rating, link, title} = req.body
     const image = req.file.path;
     try{
-        const hotel = await Hotel.create({ id, image, time, rating, link })
+        const hotel = await Hotel.create({ id, image, time, rating, link, title })
         res.status(200).json(hotel)
     }
     catch(error){
@@ -30,30 +32,50 @@ export const deleteHotel = async (req, res) => {
         return res.status(404).json({error: "no such hotel"})
     }
 
-    const hotel = await Hotel.findOneAndDelete({_id: id},{
+    const hotel = await Hotel.findById({_id: id},{
     })
+    if (hotel.image) {
+            fs.unlink(hotel.image, (err)=>{
+                if(err) throw err;
+            })
+        }
 
     if(!hotel){
         return res.status(404).json({error:"no such hotel"})
     }
-    res.status(200).json(hotel)
+
+    await Hotel.findOneAndDelete({_id: id})
+    
+    res.status(200).json({message: "hotel deleted"})
 }
 
 // update a hotel
-export const updateHotel = (req, res) => {
+export const updateHotel =async (req, res) => {
     const { id } = req.params
+    
+    try{
+    const newhotel = await Hotel.findByIdAndUpdate(id,{...req.body},{new: true})
+        // console.log(...req.body)
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error:"no such hotel"})
+        res.status(200).json(newhotel)
+
+
+    } catch(err){
+        res.json({error:err.message})
     }
 
-    const hotel = Hotel.findOneAndUpdate({_id: id}, {
-        ...req.body
-    })
-    if(!hotel){
-        return res.status(404).json({error: "no such hotel"})
-    }
-    res.status(200).json(hotel)
+    // if(!mongoose.Types.ObjectId.isValid(idd)){
+    //     return res.status(404).json({error:"no such hotel"})
+    // }
+
+// if(!mongoose.Types.ObjectId.isValid(idd)){
+//     return res.status(404).json({error:"no such hotel"})
+// }
+
+    // if(!hotel){
+    //     return res.status(404).json({error: "no such hotel"})
+    // }
+    // res.status(200).json(newhotel)
 };
 
 

@@ -15,7 +15,7 @@ router.get('/', getAllHotel)
 
 router.post('/create', upload.single('image'), createHotel)
 
-router.delete('/delete/:id', deleteHotel)
+router.delete('/delete/:id', upload.single('image'), deleteHotel)
 
 router.patch('/update/:id', updateHotel)
 //upload images

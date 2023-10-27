@@ -5,27 +5,27 @@ const schema = mongoose.Schema;
 const hotelSchema = new schema({
     id: {
         type: Number,
-        require: true
+        required: true
     },
     image: {
         type: String,
-        require: true
+        required: true
     },
     title: {
         type: String,
-        require: true
+        required: true
     },
     time: {
         type: Number,
-        require: true
+        required: true
     },
     rating: {
         type: Number,
-        require: true    
+        required: true    
     },
     link: {
         type: String,
-        require: true
+        required: true
     }
 },{timestamps: true})
 
