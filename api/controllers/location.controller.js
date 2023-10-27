@@ -8,17 +8,15 @@ export const createLocation = async (req,res,next)=>{
 
     const images = req.files;
     let imagePathArray = [];
-    let heroImagePath = "";
+    
 
     for(let i=0;i<images.length;i++){
-        
-        if(i==0){
-            heroImagePath = images[i].path;
-        } else {
             imagePathArray.push(images[i].path);
         }
 
-    }
+    
+
+    let heroImagePath = imagePathArray[0];
 
     const newLocation = new Location({
         id, 
@@ -68,7 +66,7 @@ export const updateLocation = async (req,res,next)=>{
 
 export const updateImage = async (req,res,next)=>{
     const selectedLocation = await Location.findById(req.params.id);
-    const selectedImage = parseInt(req.params.number) -1;
+    const selectedImage = parseInt(req.params.number) ;
     const oldImage = selectedLocation.images[selectedImage];
     const newImage = req.file;
 
@@ -78,6 +76,7 @@ export const updateImage = async (req,res,next)=>{
         fs.unlink(oldImage, (err)=>{
             if(err) throw err;
         })
+        await selectedLocation.save();
         res.status(200).json(selectedLocation);
     } catch(error){
         res.status(400).json({message: "error updating hero"})
@@ -89,19 +88,22 @@ export const updateHeroImage = async (req,res)=>{
 
     const selectedLocation = await Location.findById(req.params.id);
     const newHeroImage = req.file.path;
-    let oldHeroImage = selectedLocation.heroImage;
-    // console.log("old image ", oldHeroImage, " ", typeof(oldHeroImage))
-    // console.log("new image: ", newHeroImage)
-    // console.log(oldHeroImage)
-    // res.json(selectedLocation);
+    const oldHeroImage = selectedLocation.heroImage;
+    console.log("old image ", oldHeroImage, " ", typeof(oldHeroImage))
+    console.log("new image ", newHeroImage, " ", typeof(newHeroImage) )
+    console.log("heroImage ", selectedLocation.heroImage )
+    // console.log("old image",oldHeroImage)
+    console.log(selectedLocation);
     // return;
     try{
        
-       await  fs.unlink(`${oldHeroImage}`, (err)=>{
+         fs.unlink(oldHeroImage, (err)=>{
                 if(err) console.log(err);
                 return;
             })
         selectedLocation.heroImage = newHeroImage;
+        await selectedLocation.save();
+
         res.status(200).json(selectedLocation);
 
     } catch(error){
