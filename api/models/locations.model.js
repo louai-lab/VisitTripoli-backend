@@ -39,10 +39,11 @@ const locationSchema = new mongoose.Schema({
   },
   images:[{ 
     type: String,
-    required: true,
+    required: false,
   }],
-  video: {
-    type: [String]
+  heroImage: {
+    type: String,
+    required: true,
   }
 },{timestamps: true});
 

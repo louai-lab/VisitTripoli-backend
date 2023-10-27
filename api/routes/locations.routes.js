@@ -5,6 +5,8 @@ deleteLocation,
 updateLocation,
 getOneLocation,
 getAllLocations,
+updateImage,
+updateHeroImage,
 } from "../controllers/location.controller.js"
 import upload from '../utils/multer.js';
 
@@ -13,6 +15,9 @@ const router = express.Router();
 router.post('/create',upload.array("formimages"), createLocation);
 router.delete("/delete/:id", deleteLocation);
 router.put("/update/:id", updateLocation);
+router.put("/update/image/:id/:number", upload.single("formimages"),updateImage);
+router.put("/update/image/:id", upload.single("formimages"),updateHeroImage);
+
 router.get("/:id", getOneLocation);
 router.get("/", getAllLocations);
 

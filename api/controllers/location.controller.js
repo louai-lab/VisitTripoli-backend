@@ -1,31 +1,49 @@
 import Location from "../models/locations.model.js"
+import fs from 'fs'
 
 export const createLocation = async (req,res,next)=>{
-    const {id, title, address, timeFromCenter, googleRating, entranceFee, description, smallDescription, geoLocation, video} = req.body;
-    // const {images} = req.file.path;
-    // const addedImage = images;
-    // const newLocation = new Location({
-    //     id, 
-    //     title, 
-    //     address, 
-    //     timeFromCenter, 
-    //     googleRating, 
-    //     entranceFee, 
-    //     description, 
-    //     smallDescription, 
-    //     geoLocation, 
-    //     images, 
-    //     video
-    // });
-return res.json({"images": req.files})
+    const {id, title, address, timeFromCenter, googleRating, entranceFee, description, smallDescription, geoLocation} = req.body;
+
+//  return res.json({"loc":JSON.parse(geoLocation) })
+
+    const images = req.files;
+    let imagePathArray = [];
+    let heroImagePath = "";
+
+    for(let i=0;i<images.length;i++){
+        
+        if(i==0){
+            heroImagePath = images[i].path;
+        } else {
+            imagePathArray.push(images[i].path);
+        }
+
+    }
+
+    const newLocation = new Location({
+        id, 
+        title, 
+        address, 
+        timeFromCenter, 
+        googleRating, 
+        entranceFee, 
+        description, 
+        smallDescription, 
+        geoLocation: JSON.parse(geoLocation),
+        images: imagePathArray, 
+        heroImage: heroImagePath,
+    });
+
     try{
         await newLocation.save();
         res.status(201).json(newLocation)
     } catch (error) {
-        next(error);
+        res.json({error: error.message})
     }
 }
 export const updateLocation = async (req,res,next)=>{
+    // let geoLocations = req.body.geoLocation;
+    // geoLocations = JSON.parse(geoLocations);
     try{
         const updatedLocation = await Location.findByIdAndUpdate(req.params.id, {
             $set: {
@@ -38,8 +56,6 @@ export const updateLocation = async (req,res,next)=>{
                 description: req.body.description,
                 smallDescription: req.body.smallDescription,
                 geoLocation: req.body.geoLocation,
-                images: req.body.images,
-                video: req.body.video,
             }
         }, {new: true})
 
@@ -49,7 +65,80 @@ export const updateLocation = async (req,res,next)=>{
         next(error)
     }
 }
+
+export const updateImage = async (req,res,next)=>{
+    const selectedLocation = await Location.findById(req.params.id);
+    const selectedImage = parseInt(req.params.number) -1;
+    const oldImage = selectedLocation.images[selectedImage];
+    const newImage = req.file;
+
+
+    try{
+        selectedLocation.images[selectedImage] = newImage.path;
+        fs.unlink(oldImage, (err)=>{
+            if(err) throw err;
+        })
+        res.status(200).json(selectedLocation);
+    } catch(error){
+        res.status(400).json({message: "error updating hero"})
+    }
+
+}
+
+export const updateHeroImage = async (req,res)=>{
+
+    const selectedLocation = await Location.findById(req.params.id);
+    const newHeroImage = req.file.path;
+    let oldHeroImage = selectedLocation.heroImage;
+    // console.log("old image ", oldHeroImage, " ", typeof(oldHeroImage))
+    // console.log("new image: ", newHeroImage)
+    // console.log(oldHeroImage)
+    // res.json(selectedLocation);
+    // return;
+    try{
+       
+       await  fs.unlink(`${oldHeroImage}`, (err)=>{
+                if(err) console.log(err);
+                return;
+            })
+        selectedLocation.heroImage = newHeroImage;
+        res.status(200).json(selectedLocation);
+
+    } catch(error){
+        res.status(400).json({message: "error updating hero", newimagepath: newHeroImage.path})
+    }
+}
+
+
+
 export const deleteLocation = async (req,res,next)=>{
+    
+    const deletedLocation = await Location.findById(req.params.id);
+    // console.log(deletedLocation);
+    // res.json(deletedLocation);
+    // return
+    
+    if(deletedLocation.images){
+        for(let i=0; i<deletedLocation.images.length; i++){
+            if(fs. existsSync(deletedLocation.images[i])){
+                fs.unlink(`${deletedLocation.images[i]}`,(err)=>{
+                    if(err) res.json({message: "error deleting images"});
+                    return;
+                })
+            }
+        }
+    }
+    
+    if(deletedLocation.heroImage){
+        if(fs.existsSync(deletedLocation.heroImage)){
+            fs.unlink(`${deletedLocation.heroImage}`, (err)=>{
+                if(err) res.json({message: "error deleting hero image"});
+                return;
+            })
+        }
+    }
+    console.log("images deleted")
+
     try{
         await Location.findByIdAndDelete(req.params.id);
         res.status(200).json('Location has been deleted successfully!')
@@ -57,6 +146,7 @@ export const deleteLocation = async (req,res,next)=>{
         next(error);
     }
 }
+
 export const getOneLocation = async (req,res)=>{
     const location = await Location.findOne({_Id: req.body.id})
     if(!location){
@@ -69,8 +159,8 @@ export const getOneLocation = async (req,res)=>{
     }
 }
 export const getAllLocations = async (req,res)=>{
-    const all = {};
-    const allLocations = await Location.find(all);
+    // const all = {};
+    const allLocations = await Location.find();
     try{
         res.status(200).json(allLocations);
     } catch(error){
