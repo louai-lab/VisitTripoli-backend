@@ -7,7 +7,7 @@ const hotelSchema = new schema({
         type: Number,
         require: true
     },
-    img: {
+    image: {
         type: String,
         require: true
     },

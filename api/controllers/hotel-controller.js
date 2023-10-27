@@ -2,35 +2,6 @@ import Hotel from '../models/hotel-model.js'
 
 import mongoose from 'mongoose'
 
-import multer from 'multer'
-
-import  path  from 'path'
-
-/////////////////
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'images')
-    },
-    filename: (req, file, cb) => {
-        console.log(file)
-        cb(null, Date.now() + path.extname(file.originalname))
-    }
-
-})
-
-export const upload = multer({
-    storage: storage,
-    fileFilter: (req, file, callback) => {
-
-    if (file.mimetype === "image/png" || file.mimetype === "image/jpg")
-        callback(null, true)
-
-    else{
-        console.log("")
-        callback(null, false)
-    }
-}})
-
 // get all hotels
 export const getAllHotel = async (req, res) => {
     const hotels = await Hotel.find().sort({createdAt: -1})
@@ -41,9 +12,9 @@ export const getAllHotel = async (req, res) => {
 //create a hotel
 export const createHotel = async (req, res) => {
     const { id, time, rating, link } = req.body
-    ///// = req.file.path;
+    const image = req.file.path;
     try{
-        const hotel = await Hotel.create({ id, img, time, rating, link })
+        const hotel = await Hotel.create({ id, image, time, rating, link })
         res.status(200).json(hotel)
     }
     catch(error){
@@ -83,7 +54,7 @@ export const updateHotel = (req, res) => {
         return res.status(404).json({error: "no such hotel"})
     }
     res.status(200).json(hotel)
-
-
 };
 
+
+// export default upload
