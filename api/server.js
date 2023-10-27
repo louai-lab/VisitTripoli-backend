@@ -5,12 +5,14 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { toursRouter } from "./routes/tour.router.js";
+import locationRouter from "./routes/locations.routes.js";
 
 // express app
 const app = express();
 app.use(express.json());
 
 app.use("/tours", toursRouter);
+app.use("/locations", locationRouter);
 // app.use("/uploads", express.static(path.join(__dirname, "images")));
 
 async function startServer() {
