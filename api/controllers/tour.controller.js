@@ -26,7 +26,7 @@ async function httpGetAllTours(req, res) {
   let getAllTours = await toursDb
     .find({}, { _id: 0, __v: 0 })
     .sort({ title: 1 });
-  return res.status(200).json(await getAllTours);
+  return res.status(200).json(getAllTours);
 }
 
 async function httpAddNewTour(req, res) {
