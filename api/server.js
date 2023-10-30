@@ -1,10 +1,9 @@
 import express from "express";
 
 import mongoose from "mongoose";
-// import path, { dirname } from "path";
 import dotenv from "dotenv";
 
-import hotelRouter from "./routes/hotel-route.js"
+import hotelRouter from "./routes/hotel-route.js";
 
 dotenv.config();
 
@@ -17,8 +16,7 @@ app.use(express.json());
 
 app.use("/tours", toursRouter);
 app.use("/locations", locationRouter);
-// app.use("/uploads", express.static(path.join(__dirname, "images")));
-
+app.use(express.static("images"));
 async function startServer() {
   mongoose.connection.once("open", () => {
     console.log("mongo is ready");
@@ -30,24 +28,22 @@ async function startServer() {
   await mongoose.connect(process.env.MONG_ULI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-
   });
 
   app.listen(process.env.PORT, () => {
     console.log("listening on port: " + process.env.PORT);
-  // app.listen(process.env.PORT, () => {
-  //   console.log("listening on port: " + process.env.PORT);
-  // });
-})
+    // app.listen(process.env.PORT, () => {
+    //   console.log("listening on port: " + process.env.PORT);
+    // });
+  });
 }
 
 startServer();
 
-app.use('/api/hotel', hotelRouter)
+app.use("/api/hotel", hotelRouter);
 
 //middleware
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-
