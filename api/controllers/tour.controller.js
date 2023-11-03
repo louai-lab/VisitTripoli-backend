@@ -64,14 +64,9 @@ async function httpAddNewTour(req, res) {
 
 async function httpUpdateTour(req, res) {
   const tour = req.body;
+  tour.id = req.params.id;
   const newImage = req.file.path;
   const found = await toursDb.findOne({ id: tour.id });
-  if (!tour.id) {
-    if (newImage) {
-      removeImage(newImage);
-    }
-    return res.status(400).json({ error: "enter an id" });
-  }
   if (!found) {
     if (newImage) {
       removeImage(newImage);
