@@ -1,5 +1,5 @@
 import express from "express";
-
+import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
@@ -14,9 +14,14 @@ import locationRouter from "./routes/locations.routes.js";
 const app = express();
 app.use(express.json());
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use("/tours", toursRouter);
 app.use("/locations", locationRouter);
-app.use(express.static("images"));
+app.use("/images", express.static("images"));
 async function startServer() {
   mongoose.connection.once("open", () => {
     console.log("mongo is ready");
