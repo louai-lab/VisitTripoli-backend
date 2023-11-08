@@ -26,6 +26,10 @@ const hotelSchema = new schema({
     link: {
         type: String,
         required: true
+    },
+    address:{
+        type: String,
+        required:true
     }
 },{timestamps: true})
 

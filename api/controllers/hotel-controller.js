@@ -13,10 +13,10 @@ export const getAllHotel = async (req, res) => {
 
 //create a hotel
 export const createHotel = async (req, res) => {
-    const { id, time, rating, link, title} = req.body
+    const { id, time, rating, link, title, address} = req.body
     const image = req.file.path;
     try{
-        const hotel = await Hotel.create({ id, image, time, rating, link, title })
+        const hotel = await Hotel.create({ id, image, time, rating, link, title, address})
         res.status(200).json(hotel)
     }
     catch(error){
@@ -55,7 +55,6 @@ export const updateHotel =async (req, res) => {
     
     try{
     const newhotel = await Hotel.findByIdAndUpdate(id,{...req.body},{new: true})
-        // console.log(...req.body)
 
         res.status(200).json(newhotel)
 
