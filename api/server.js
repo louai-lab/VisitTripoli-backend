@@ -33,18 +33,9 @@ async function startServer() {
 
   app.listen(process.env.PORT, () => {
     console.log("listening on port: " + process.env.PORT);
-    // app.listen(process.env.PORT, () => {
-    //   console.log("listening on port: " + process.env.PORT);
-    // });
   });
 }
 
 startServer();
 
 app.use("/api/hotel", hotelRouter);
-
-//middleware
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});

@@ -1,6 +1,5 @@
 import toursDb from "../models/tour.models.js";
 import fs from "fs";
-import path from "path";
 
 let defaultId = 0;
 
