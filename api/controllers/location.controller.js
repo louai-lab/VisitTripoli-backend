@@ -1,6 +1,7 @@
 import Location from "../models/locations.model.js";
 import fs from "fs";
 
+// Create Location
 export const createLocation = async (req, res, next) => {
   const {
     id,
