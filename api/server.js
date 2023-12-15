@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRouter from './routes/user.routes.js'
 
 import hotelRouter from "./routes/hotel-route.js";
 
@@ -41,4 +42,5 @@ async function startServer() {
 
 startServer();
 
-
+app.use("/api/hotel", hotelRouter);
+app.use('/user',userRouter)
