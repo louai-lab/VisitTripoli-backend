@@ -15,8 +15,11 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
+
 app.use("/tours", toursRouter);
 app.use("/locations", locationRouter);
+app.use("/api/hotel", hotelRouter);
+
 app.use("/images", express.static("images"));
 async function startServer() {
   mongoose.connection.once("open", () => {
@@ -38,4 +41,4 @@ async function startServer() {
 
 startServer();
 
-app.use("/api/hotel", hotelRouter);
+
