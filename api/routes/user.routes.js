@@ -1,6 +1,7 @@
 import express from 'express'
-import { getAllUsers ,addUser , getUser ,updateUser} from '../controllers/user.controllers.js';
+import { getAllUsers , register , getUser ,updateUser} from '../controllers/user.controllers.js';
 import upload from '../middleware/multer.js';
+import { verifyToken } from '../middleware/auth.js';
 
 
 const userRouter = express.Router();
@@ -8,7 +9,8 @@ const userRouter = express.Router();
 
 userRouter.get('/',getAllUsers);
 userRouter.get('/:id',getUser)
-userRouter.post('/add',upload.single('image'),addUser)
+userRouter.post('/register',upload.single('image'),register)
+
 userRouter.patch('/update/:id',upload.single('image'),updateUser)
 
 export default userRouter
