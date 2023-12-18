@@ -20,7 +20,11 @@ const userSchema = new mongoose.Schema(
     },
     image:{
         type:String,
-    }
+    },
+    // role:{
+    //   type:String,
+    //   enum: ["visitor", "admin"],
+    // }
   },
   { timestamps: true }
 );

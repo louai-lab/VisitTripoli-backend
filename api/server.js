@@ -47,12 +47,12 @@ startServer();
 app.use("/api/hotel", hotelRouter);
 app.use('/user',userRouter)
 app.post('/login', login )
-app.get('logout',logOut)
+app.get('/logout',logOut)
 
 app.get('/protected-route', verifyToken, (req, res) => {
   
   const userId = req.user.userId;
   
-  res.json({ message: 'Protected route accessed', userId });
+  res.json({ message: 'Protected route is working', userId });
 });
 
