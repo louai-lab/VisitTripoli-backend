@@ -1,7 +1,4 @@
 import Hotel from "../models/hotel-model.js";
-
-import mongoose from "mongoose";
-
 import fs from "fs";
 
 // get all hotels
