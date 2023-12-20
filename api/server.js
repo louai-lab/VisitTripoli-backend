@@ -1,17 +1,17 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import userRouter from './routes/user.routes.js'
+import userRouter from './oldRoutes/user.routes.js'
 import  {login } from "./oldControllers/login.controller.js";
 import { logOut } from "./middleware/auth.js";
 
-import hotelRouter from "./routes/hotel-route.js";
+import hotelRouter from "./oldRoutes/hotel-route.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
 
-import { toursRouter } from "./routes/tour.router.js";
-import locationRouter from "./routes/locations.routes.js";
+import { toursRouter } from "./oldRoutes/tour.router.js";
+import locationRouter from "./oldRoutes/locations.routes.js";
 import { verifyToken } from "./middleware/auth.js";
 import sequelize from '../api/config/dbConnection.js'
 
