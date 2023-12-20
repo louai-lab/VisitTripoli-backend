@@ -1,17 +1,16 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import userRouter from './oldRoutes/user.routes.js'
-import  {login } from "./oldControllers/login.controller.js";
+import userRouter from './routes/user.routes.js'
+import  {login } from './controllers/login.controller.js'
 import { logOut } from "./middleware/auth.js";
 
-import hotelRouter from "./oldRoutes/hotel-route.js";
+
 import cookieParser from "cookie-parser";
 
 dotenv.config();
 
-import { toursRouter } from "./oldRoutes/tour.router.js";
-import locationRouter from "./oldRoutes/locations.routes.js";
+
 import { verifyToken } from "./middleware/auth.js";
 import sequelize from '../api/config/dbConnection.js'
 
@@ -30,11 +29,12 @@ catch (error) {
   console.log('unable to connect!')
 }
 
-app.use("/tours", toursRouter);
-app.use("/locations", locationRouter);
-app.use("/images", express.static("images"));
+// app.use("/tours", toursRouter);
+// app.use("/locations", locationRouter);
+app.use(express.static('public'));
+app.use("/images",express.static("images"))
 
-app.use("/api/hotel", hotelRouter);
+// app.use("/api/hotel", hotelRouter);
 app.use('/user',userRouter)
 app.post('/login', login )
 app.get('/logout',logOut)
@@ -49,3 +49,12 @@ app.get('/protected-route', verifyToken, (req, res) => {
   app.listen(process.env.PORT, () => {
     console.log("listening on port: " + process.env.PORT);
   });
+
+//   // Synchronize models with the database, using alter
+// sequelize.sync({ alter: true })
+// .then(() => {
+//   console.log('Database synchronized successfully.');
+// })
+// .catch((error) => {
+//   console.error('Error synchronizing database:', error);
+// });
