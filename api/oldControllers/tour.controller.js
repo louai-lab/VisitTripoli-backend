@@ -1,4 +1,4 @@
-import toursDb from "../models/tour.models.js";
+import toursDb from "../oldModels/tour.models.js";
 import fs from "fs";
 
 let defaultId = 0;

@@ -1,4 +1,4 @@
-import Location from "../models/locations.model.js";
+import Location from "../oldModels/locations.model.js";
 import fs from "fs";
 
 // Create Location

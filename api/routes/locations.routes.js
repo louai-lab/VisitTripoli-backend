@@ -7,7 +7,7 @@ import {
   getAllLocations,
   updateImage,
   updateHeroImage,
-} from "../controllers/location.controller.js";
+} from "../oldControllers/location.controller.js";
 import upload from "../middleware/multer.js";
 
 const router = express.Router();

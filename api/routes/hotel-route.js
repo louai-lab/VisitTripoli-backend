@@ -9,7 +9,7 @@ import {
   createHotel,
   deleteHotel,
   updateHotel,
-} from "../controllers/hotel-controller.js";
+} from "../oldControllers/hotel-controller.js";
 
 router.get("/", getAllHotel);
 

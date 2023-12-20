@@ -1,4 +1,4 @@
-import Hotel from "../models/hotel-model.js";
+import Hotel from "../oldModels/hotel-model.js";
 import fs from "fs";
 
 // get all hotels

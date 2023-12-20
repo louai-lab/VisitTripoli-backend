@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import fs from "fs";
 import bcrypt from "bcrypt";
 // import mongoose from "mongoose";
-import User from "../models/user.model.js";
+import User from "../oldModels/user.model.js";
 
 dotenv.config();
 

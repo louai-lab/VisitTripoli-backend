@@ -4,7 +4,7 @@ import {
   httpAddNewTour,
   httpUpdateTour,
   httpDeleteTour,
-} from "../controllers/tour.controller.js";
+} from "../oldControllers/tour.controller.js";
 import upload from "../middleware/multer.js";
 
 const toursRouter = express.Router();
