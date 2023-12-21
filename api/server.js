@@ -15,7 +15,7 @@ import locationRouter from "./oldRoutes/locations.routes.js";
 import { verifyToken } from "./middleware/auth.js";
 import sequelize from '../api/config/dbConnection.js'
 
-import tourRoutes from './routes/tour-routes.js';
+import tourRoutes from './routes/tour.routes.js';
 
 // express app
 const app = express();
