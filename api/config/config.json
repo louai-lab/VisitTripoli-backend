@@ -3,8 +3,8 @@
     "username": "abed9333",
     "password": "abed@1993",
     "database": "visitripoli",
-    "host": "127.0.0.1",
-    "dialect": "db4free.net"
+    "host": "db4free.net",
+    "dialect": "mysql"
   },
   "test": {
     "username": "root",
