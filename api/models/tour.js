@@ -1,28 +1,37 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Tour extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  Tour.init({
-    title: DataTypes.STRING,
-    startTime: DataTypes.DATE,
-    endTime: DataTypes.DATE,
-    price: DataTypes.FLOAT,
-    image: DataTypes.STRING,
-    userId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Tour',
-  });
-  return Tour;
-};
+import { Sequelize } from "sequelize";
+import sequelize from "../config/dbConnection.js";
+
+const Tour = sequelize.define("Tour", {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  startTime: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
+  endTime: {
+    type: Sequelize.DATE,
+    allowNull: false,
+  },
+  price: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  image: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  userId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+});
+
+export default Tour;
