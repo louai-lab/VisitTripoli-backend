@@ -5,7 +5,7 @@ import {
   getOneTour,
   updateTour,
   deleteATour,
-} from "../controllers/tour.controllers";
+} from "../controllers/tour.controllers.js";
 
 const router = express.Router();
 
