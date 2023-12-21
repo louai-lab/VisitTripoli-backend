@@ -15,6 +15,8 @@ import locationRouter from "./oldRoutes/locations.routes.js";
 import { verifyToken } from "./middleware/auth.js";
 import sequelize from '../api/config/dbConnection.js'
 
+import tourRoutes from './routes/tour.routes.js';
+
 // express app
 const app = express();
 app.use(express.json());
@@ -38,6 +40,8 @@ app.use("/api/hotel", hotelRouter);
 app.use('/user',userRouter)
 app.post('/login', login )
 app.get('/logout',logOut)
+
+app.use("/tour", tourRoutes);
 
 app.get('/protected-route', verifyToken, (req, res) => {
   

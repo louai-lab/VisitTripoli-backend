@@ -51,13 +51,13 @@ export const getOneTour = async (req, res) => {
 export const updateTour = async (req, res) => {
   const { id } = req.params;
   const { title, startTime, endTime, price, userId } = req.body;
-  const imageTour = req.file.filename;
+  const tourImage = req.file.filename;
   try {
     const ATour = await Tour.findByPk(id);
     if (!ATour) {
       return res.status(404).json({ success: false, error: "Tour not found" });
     }
-    await ATour.update({ title, startTime, endTime, price, image: imageTour, userId });
+    await ATour.update({ title, startTime, endTime, price, image: tourImage, userId });
     res.status(200).json({ success: true, data: ATour });
   } catch (error) {
     res.status(500).json({ success: false, error: "Error updating the tour" });
