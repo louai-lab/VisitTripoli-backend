@@ -23,7 +23,7 @@ const getAllUsers = async (req, res) => {
 // get one user
 
 const getOneUser = async ( req,res)=>{
-  const userId = req.params.id;
+  const userId = req.user.userId;
 
   try{
       const user = await User.findOne({where:{id:userId}})
