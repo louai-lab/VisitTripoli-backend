@@ -8,9 +8,11 @@ import { logOut } from "./middleware/auth.js";
 import hotelRouter from "./oldRoutes/hotel-route.js";
 import cookieParser from "cookie-parser";
 
+
+import toursRoutes from './routes/tour.routes.js'
+
 dotenv.config();
 
-import { toursRouter } from "./oldRoutes/tour.router.js";
 import locationRouter from "./oldRoutes/locations.routes.js";
 import { verifyToken } from "./middleware/auth.js";
 import sequelize from '../api/config/dbConnection.js'
@@ -32,16 +34,15 @@ catch (error) {
   console.log('unable to connect!')
 }
 
-app.use("/tours", toursRouter);
 app.use("/locations", locationRouter);
 app.use("/images", express.static("images"));
 
 app.use("/api/hotel", hotelRouter);
 app.use('/user',userRouter)
+app.use("/tours", toursRoutes)
 app.post('/login', login )
 app.get('/logout',logOut)
 
-app.use("/tour", tourRoutes);
 
 app.get('/protected-route', verifyToken, (req, res) => {
   
