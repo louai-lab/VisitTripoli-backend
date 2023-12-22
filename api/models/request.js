@@ -1,27 +1,30 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Request extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+import { DataTypes, Sequelize } from "sequelize"
+import sequelize from "../config/dbConnection.js"
+
+const Request = sequelize.define(
+  'Request',
+  {
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    visitorName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    visitorEmail: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    visitorPhone: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    tourId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }
-  Request.init({
-    date: DataTypes.DATE,
-    visitorName: DataTypes.STRING,
-    visitorEmail: DataTypes.STRING,
-    visitorPhone: DataTypes.STRING,
-    tourId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Request',
-  });
-  return Request;
-};
+)
+
+export default Request

@@ -1,27 +1,29 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Hotel extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+import { DataTypes, Sequelize } from "sequelize"
+import sequelize from "../config/dbConnection.js"
+
+const Hotel = sequelize.define(
+  'Hotel',
+  {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    rating: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    link: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    userId: {
+      type: DataTypes.INTEGER
     }
   }
-  Hotel.init({
-    title: DataTypes.STRING,
-    rating: DataTypes.FLOAT,
-    link: DataTypes.STRING,
-    image: DataTypes.STRING,
-    userId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Hotel',
-  });
-  return Hotel;
-};
+)
+
+export default Hotel
