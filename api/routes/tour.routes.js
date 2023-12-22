@@ -3,6 +3,7 @@ import {
   creatATtour,
   getAllTours,
   getOneTour,
+  getAllToursByUserId,
   updateTour,
   deleteATour,
 } from "../controllers/tour.controllers.js";
@@ -15,6 +16,10 @@ router.post("/create", upload.single("image"), creatATtour); // Create a tour
 router.get("/all", getAllTours); // Get all tours
 
 router.get("/:id", getOneTour); // Get one tour
+
+
+router.get("/byUserId/:id", getAllToursByUserId); // Get all the tours depends by user id
+
 
 router.put("/update/:id", upload.single("image"), updateTour); // Update a tour
 

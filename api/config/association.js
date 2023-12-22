@@ -1,5 +1,6 @@
+import Tours from "../models/tour";
 import User from "../models/user";
-import Tour from "../models/tour";
 
-User.hasMany(Tour);
-Tour.belongsTo(User);
+User.hasMany(Tours);
+Tours.belongsTo(User);
+

@@ -49,6 +49,26 @@ export const getOneTour = async (req, res) => {
   }
 };
 
+
+// get All Tours By UserId 
+
+export const getAllToursByUserId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const toursData = await Tours.findAll({ where: { userId: userId } });
+
+    if (!toursData || toursData.length === 0) {
+      return res.status(404).json({ success: false, message: 'No tours found for the user ID' });
+    }
+
+    res.status(200).json({ success: true, data: toursData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Server Error' });
+  }
+};
+
+
 // To update a tour
 
 export const updateTour = async (req, res) => {
