@@ -40,7 +40,7 @@ export const login = async (req, res) => {
             })
             .status(200)
             .json(user);
-            console.log(user)
+            // console.log(user)
         
       } else {
         res.status(401).json({ error: "Email or Password is incorrect" });

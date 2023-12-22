@@ -75,8 +75,8 @@ const register = async (req, res) => {
     
 
     // await newUser.save();
-    res.status(201).json({ user: newUser, token });
-    console.log(newUser);
+    res.status(201).json(newUser);
+    // console.log(newUser);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
     const path = `public/images/${req.file.filename}`;
