@@ -16,8 +16,6 @@ dotenv.config();
 import { verifyToken } from "./middleware/auth.js";
 import sequelize from '../api/config/dbConnection.js'
 
-import tourRoutes from './routes/tour.routes.js';
-
 // express app
 const app = express();
 app.use(express.json());
@@ -33,7 +31,7 @@ catch (error) {
   console.log('unable to connect!')
 }
 
-app.use("/locations", locationRouter);
+// app.use("/locations", locationRouter);
 // app.use("/tours", toursRouter);
 // app.use("/locations", locationRouter);
 app.use(express.static('public'));
@@ -57,11 +55,11 @@ app.get('/protected-route', verifyToken, (req, res) => {
     console.log("listening on port: " + process.env.PORT);
   });
 
-//   // Synchronize models with the database, using alter
-// sequelize.sync({ alter: true })
-// .then(() => {
-//   console.log('Database synchronized successfully.');
-// })
-// .catch((error) => {
-//   console.error('Error synchronizing database:', error);
-// });
+  // Synchronize models with the database, using alter
+sequelize.sync({ alter: true })
+.then(() => {
+  console.log('Database synchronized successfully.');
+})
+.catch((error) => {
+  console.error('Error synchronizing database:', error);
+});

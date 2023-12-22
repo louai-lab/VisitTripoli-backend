@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import sequelize from "../config/dbConnection.js";
 
-const Tour = sequelize.define("Tour", {
+const Tours = sequelize.define("Tours", {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -34,4 +34,4 @@ const Tour = sequelize.define("Tour", {
   },
 });
 
-export default Tour;
+export default Tours;

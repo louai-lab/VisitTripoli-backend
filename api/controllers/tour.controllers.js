@@ -1,12 +1,13 @@
-import Tour from "../models/tour.js";
+import Tours from "../models/tour.js";
 
 // To create a tour
 
 export const creatATtour = async (req, res) => {
   const { title, startTime, endTime, price, userId } = req.body;
+  console.log(req.body);
   const tourImage = req.file.filename;
   try {
-    const newTour = await Tour.create({
+    const newTour = await Tours.create({
       title,
       startTime,
       endTime,
@@ -14,8 +15,10 @@ export const creatATtour = async (req, res) => {
       image: tourImage,
       userId,
     });
+    await newTour.save();
     res.status(201).json({ success: true, data: newTour });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ success: false, error: "Server Error" });
   }
 };
@@ -24,7 +27,7 @@ export const creatATtour = async (req, res) => {
 
 export const getAllTours = async (req, res) => {
   try {
-    const AllTours = await Tour.findAll();
+    const AllTours = await Tours.findAll();
     res.status(200).json({ success: true, data: AllTours });
   } catch (error) {
     res.status(500).json({ success: false, error: "Server Error" });
@@ -35,10 +38,10 @@ export const getAllTours = async (req, res) => {
 
 export const getOneTour = async (req, res) => {
   try {
-    const ATour = await Tour.findByPk(req.params.id);
+    const ATour = await Tours.findByPk(req.params.id);
     // const ATour = await Tour.findOne({ where: { req.params.id } });
     if (!ATour) {
-      res.status(404).json({ error: 'Tour not found' });
+      res.status(404).json({ error: "Tour not found" });
     }
     res.status(200).json({ success: true, data: ATour });
   } catch (error) {
@@ -53,11 +56,18 @@ export const updateTour = async (req, res) => {
   const { title, startTime, endTime, price, userId } = req.body;
   const tourImage = req.file.filename;
   try {
-    const ATour = await Tour.findByPk(id);
+    const ATour = await Tours.findByPk(id);
     if (!ATour) {
       return res.status(404).json({ success: false, error: "Tour not found" });
     }
-    await ATour.update({ title, startTime, endTime, price, image: tourImage, userId });
+    await ATour.update({
+      title,
+      startTime,
+      endTime,
+      price,
+      image: tourImage,
+      userId,
+    });
     res.status(200).json({ success: true, data: ATour });
   } catch (error) {
     res.status(500).json({ success: false, error: "Error updating the tour" });
@@ -69,7 +79,7 @@ export const updateTour = async (req, res) => {
 export const deleteATour = async (req, res) => {
   const { id } = req.params;
   try {
-    const ATour = await Tour.findByPk(id);
+    const ATour = await Tours.findByPk(id);
     if (!ATour) {
       return res.status(404).json({ success: false, error: "Tour not found" });
     }
