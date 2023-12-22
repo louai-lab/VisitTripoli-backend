@@ -22,7 +22,8 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       userId: {
         type: Sequelize.INTEGER
