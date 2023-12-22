@@ -17,6 +17,8 @@ const getAllUsers = async (req, res) => {
   res.status(200).json(users);
 };
 
+
+
 // Register
 
 const register = async (req, res) => {
@@ -45,6 +47,7 @@ const register = async (req, res) => {
     const token = jwt.sign({ userId: newUser._id}, process.env.SECRET_TOKEN, { expiresIn: '24h' });
     res.cookie('access_token', token, { httpOnly: true, secure: true, sameSite: 'None' });
 
+    await newUser.save();
     res.status(201).json({ user: newUser , token });
   } catch (error) {
     console.log(error);
@@ -116,5 +119,41 @@ const updateUser = async (req, res) => {
     });
   }
 };
+
+
+
+// delete an article
+
+const deleteArticle = async (req,res)=>{
+  const articleId = req.params.id;
+
+  try{
+      const articleToDelete = await Article.findOne({
+          where:{id:articleId}
+      })
+
+      if(!articleToDelete){
+          return res.status(404).json({ error: "article not found" });
+      }
+
+      await articleToDelete.destroy();
+
+      const oldImagePath = `public/images/${articleToDelete.image}`;
+
+      fs.unlink(oldImagePath, (err) => {
+          if (err) {
+            return res.status(500).json({ error: `error deleting the old image` });
+          }
+        });
+    
+        res.status(200).json({ message: "Article deleted successfully" });
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+
+}
+
+
 
 export { getAllUsers, register, getUser, updateUser };
