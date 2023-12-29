@@ -4,6 +4,8 @@ import Hotel from './hotel.js'
 import Request from "./request.js"
 import Tours from "./tour.js"
 import User from "./user.js"
+import Location from './location.js'
+import TourLocation from './tourlocation.js'
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
@@ -19,6 +21,8 @@ const userModel = User(sequelize, Sequelize)
 const tourModel = Tours(sequelize, Sequelize)
 const requestModel = Request(sequelize, Sequelize)
 const hotelModel = Hotel(sequelize, Sequelize)
+const locationModel = Location(sequelize, Sequelize)
+const tourLocationModel = TourLocation(sequelize, Sequelize)
 
 const db = {
   sequelize,
@@ -26,7 +30,9 @@ const db = {
   userModel,
   tourModel,
   requestModel,
-  hotelModel
+  hotelModel,
+  locationModel,
+  tourLocationModel
 }
 
 Object.keys(db).forEach(modelName => {
