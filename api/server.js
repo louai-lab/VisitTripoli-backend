@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/user.routes.js";
 import { login } from "./controllers/login.controller.js";
 import { logOut } from "./middleware/auth.js";
+import requestRouter from './routes/request.route.js'
 
 import cookieParser from "cookie-parser";
 
@@ -43,6 +44,7 @@ app.use("/user", userRouter);
 app.use("/tours", toursRoutes);
 app.post("/login", login);
 app.get("/logout", logOut);
+app.use('/request', requestRouter)
 
 app.get("/protected-route", verifyToken, (req, res) => {
   const userId = req.user.userId;
