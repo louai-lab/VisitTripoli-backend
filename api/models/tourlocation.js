@@ -1,18 +1,18 @@
 import { DataTypes, Sequelize } from "sequelize"
 import sequelize from "../config/dbConnection.js"
 
-const location = sequelize.define(
+const tourLocation = sequelize.define(
 'location',
 {
-name: {
-type: DataTypes.STRING,
+tourId: {
+type: DataTypes.INTEGER,
 allowNull: false
 },
-image: {
-type: DataTypes.STRING,
+locationId: {
+type: DataTypes.INTEGER,
 allowNull: false
 }
 }
 )
 
-export default location
+export default tourLocation
