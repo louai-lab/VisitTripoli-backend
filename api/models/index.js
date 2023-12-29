@@ -17,12 +17,12 @@ const sequelize = new Sequelize(
   }
 )
 
-const userModel = User(sequelize, Sequelize)
-const tourModel = Tours(sequelize, Sequelize)
-const requestModel = Request(sequelize, Sequelize)
-const hotelModel = Hotel(sequelize, Sequelize)
-const locationModel = Location(sequelize, Sequelize)
-const tourLocationModel = TourLocation(sequelize, Sequelize)
+const userModel = new User(sequelize, Sequelize)
+const tourModel = new Tours(sequelize, Sequelize)
+const requestModel = new Request(sequelize, Sequelize)
+const hotelModel = new Hotel(sequelize, Sequelize)
+const locationModel = new Location(sequelize, Sequelize)
+const tourLocationModel = new TourLocation(sequelize, Sequelize)
 
 const db = {
   sequelize,

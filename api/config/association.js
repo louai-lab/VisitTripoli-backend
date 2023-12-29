@@ -1,9 +1,9 @@
-import Tours from "../models/tour"
-import User from "../models/user"
-import Hotel from "../models/hotel"
-import Request from "../models/request"
-import Location from '../models/location'
-import tourLocation from "../models/tourlocation"
+import Tours from "../models/tour.js"
+import User from "../models/user.js"
+import Hotel from "../models/hotel.js"
+import Request from "../models/request.js"
+import Location from '../models/location.js'
+import tourLocation from "../models/tourlocation.js"
 
 User.hasMany(Tours, {
     foreignKey: 'userId',

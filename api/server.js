@@ -5,6 +5,7 @@ import userRouter from "./routes/user.routes.js";
 import { login } from "./controllers/login.controller.js";
 import { logOut } from "./middleware/auth.js";
 import requestRouter from './routes/request.route.js'
+import hotelRouter from './routes/hotel.routes.js'
 
 import cookieParser from "cookie-parser";
 
@@ -45,6 +46,7 @@ app.use("/tours", toursRoutes);
 app.post("/login", login);
 app.get("/logout", logOut);
 app.use('/request', requestRouter)
+app.use('/hotel', hotelRouter)
 
 app.get("/protected-route", verifyToken, (req, res) => {
   const userId = req.user.userId;

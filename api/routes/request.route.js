@@ -1,5 +1,5 @@
 import express from 'express'
-import { createRequest, getAllRequests, getOneRequest, getRequestsByDate, getRequestsByTourId, updateRequest, deleteRequest } from '../controllers/request.controller'
+import { createRequest, getAllRequests, getOneRequest, getRequestsByDate, getRequestsByTourId, updateRequest, deleteRequest } from '../controllers/request.controller.js'
 
 const router = express.Router()
 
