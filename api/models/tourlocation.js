@@ -2,7 +2,7 @@ import { DataTypes, Sequelize } from "sequelize"
 import sequelize from "../config/dbConnection.js"
 
 const tourLocation = sequelize.define(
-'location',
+'Tourlocations',
 {
 tourId: {
 type: DataTypes.INTEGER,

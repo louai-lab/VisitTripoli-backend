@@ -5,12 +5,12 @@ import tourLocation from '../models/tourlocation.js';
 export const createATourLocation = async (req, res) => {
   const { tourId, locationId } = req.body;
   try {
-    const newLocation = await tourLocation.create({
+    const newTourLocation = await tourLocation.create({
       tourId,
       locationId,
     });
-    await newLocation.save();
-    res.status(201).json({ success: true, data: newLocation });
+    await newTourLocation.save();
+    res.status(201).json({ success: true, data: newTourLocation });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: "Server Error" });
@@ -50,7 +50,7 @@ export const updateATourLocation = async (req, res) => {
   try {
     const ATourLocation = await tourLocation.findByPk(id);
     if (!ATourLocation) {
-      return res.status(404).json({ success: false, error: "Location not found" });
+      return res.status(404).json({ success: false, error: "Tour Location not found" });
     }
     await ATourLocation.update({
       tourId,
@@ -58,7 +58,7 @@ export const updateATourLocation = async (req, res) => {
     });
     res.status(200).json({ success: true, data: ATourLocation });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Error updating the location" });
+    res.status(500).json({ success: false, error: "Error updating the Tour Location" });
   }
 };
 
@@ -69,11 +69,11 @@ export const deleteATourLocation = async (req, res) => {
   try {
     const ATourLocation = await tourLocation.findByPk(id);
     if (!ATourLocation) {
-      return res.status(404).json({ success: false, error: "Location not found" });
+      return res.status(404).json({ success: false, error: "Tour Location not found" });
     }   
     await ATourLocation.destroy();
-    res.status(200).json({ success: true, message: "Location has been deleted" });
+    res.status(200).json({ success: true, message: "Tour Location has been deleted" });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Error deleting the location" });
+    res.status(500).json({ success: false, error: "Error deleting the Tour location" });
   }
 };
