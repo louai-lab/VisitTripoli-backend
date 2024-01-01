@@ -1,7 +1,7 @@
 import { DataTypes, Sequelize } from "sequelize";
 import sequelize from "../config/dbConnection.js";
 
-const location = sequelize.define("location", {
+const location = sequelize.define("Locations", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,

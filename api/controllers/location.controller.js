@@ -1,4 +1,5 @@
 import location from "../models/location.js";
+import fs from "fs";
 
 // To create a location
 
@@ -47,21 +48,32 @@ export const getOneLocation = async (req, res) => {
 // To update a location
 
 export const updateLocation = async (req, res) => {
-  const { id } = req.params;
-  const { name } = req.body;
-  const tourImage = req.file.filename;
+  const locationId = req.params.id;
+
+  const oldLocation = await location.findOne({ where: { id: locationId } });
+
   try {
-    const ALocation = await Tours.findByPk(id);
-    if (!ALocation) {
-      return res.status(404).json({ success: false, error: "Location not found" });
+    const updatedLocation = req.body;
+
+    const oldImagePath = `public/images/${oldLocation.image}`;
+
+    if (req.file) {
+      updatedLocation.image = req.file.filename;
+
+      fs.unlinkSync(oldImagePath, (err) => {
+        if (err) {
+          return res
+            .status(500)
+            .json({ error: `error deleting the old image` });
+        }
+      });
     }
-    await ALocation.update({
-      name,
-      image: tourImage,
-    });
-    res.status(200).json({ success: true, data: ALocation });
+
+    await oldLocation.update(updatedLocation);
+    res.status(200).json(updatedLocation);
   } catch (error) {
-    res.status(500).json({ success: false, error: "Error updating the location" });
+    console.log(error);
+    res.status(500).json({ error: `Error in updating the location.` });
   }
 };
 
@@ -72,11 +84,17 @@ export const deleteALocation = async (req, res) => {
   try {
     const ALocation = await location.findByPk(id);
     if (!ALocation) {
-      return res.status(404).json({ success: false, error: "Location not found" });
-    }   
+      return res
+        .status(404)
+        .json({ success: false, error: "Location not found" });
+    }
     await ALocation.destroy();
-    res.status(200).json({ success: true, message: "Location has been deleted" });
+    res
+      .status(200)
+      .json({ success: true, message: "Location has been deleted" });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Error deleting the locatoion" });
+    res
+      .status(500)
+      .json({ success: false, error: "Error deleting the locatoion" });
   }
 };
