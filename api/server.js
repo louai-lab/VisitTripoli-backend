@@ -15,6 +15,7 @@ dotenv.config();
 
 import { verifyToken } from "./middleware/auth.js";
 import sequelize from "../api/config/dbConnection.js";
+import locationRouter from '../api/routes/location.routes.js';
 
 // express app
 const app = express();
@@ -34,9 +35,6 @@ try {
   console.log("unable to connect!");
 }
 
-// app.use("/locations", locationRouter);
-// app.use("/tours", toursRouter);
-// app.use("/locations", locationRouter);
 app.use(express.static("public"));
 app.use("/images", express.static("images"));
 
@@ -47,6 +45,7 @@ app.post("/login", login);
 app.get("/logout", logOut);
 app.use('/request', requestRouter)
 app.use('/hotel', hotelRouter)
+app.use('/location', locationRouter)
 
 app.get("/protected-route", verifyToken, (req, res) => {
   const userId = req.user.userId;
