@@ -58,14 +58,3 @@ app.get("/protected-route", verifyToken, (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log("listening on port: " + process.env.PORT);
 });
-
-
-// // Synchronize models with the database, using alter
-// sequelize
-//   .sync({ alter: true })
-//   .then(() => {
-//     console.log("Database synchronized successfully.");
-//   })
-//   .catch((error) => {
-//     console.error("Error synchronizing database:", error);
-//   });

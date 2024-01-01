@@ -6,7 +6,6 @@ import {
   updateATourLocation,
   deleteATourLocation,
 } from "../controllers/tourLocation.controller.js";
-import { upload } from "../middleware/multer.js";
 
 const router = express.Router();
 
