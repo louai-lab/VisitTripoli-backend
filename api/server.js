@@ -15,7 +15,8 @@ dotenv.config();
 
 import { verifyToken } from "./middleware/auth.js";
 import sequelize from "../api/config/dbConnection.js";
-import locationRouter from '../api/routes/location.routes.js';
+import locationRouter from './routes/location.routes.js';
+import tourLocationRouter from './routes/tourLocation.routes.js'
 
 // express app
 const app = express();
@@ -46,6 +47,7 @@ app.get("/logout", logOut);
 app.use('/request', requestRouter)
 app.use('/hotel', hotelRouter)
 app.use('/location', locationRouter)
+app.use('/tourLocation', tourLocationRouter);
 
 app.get("/protected-route", verifyToken, (req, res) => {
   const userId = req.user.userId;
