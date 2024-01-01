@@ -1,4 +1,4 @@
-import tourLocation from '../models/tourLocation.js';
+import tourLocation from '../models/tourlocation.js';
 
 // To create a tour-location
 
