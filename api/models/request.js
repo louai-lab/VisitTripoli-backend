@@ -4,10 +4,6 @@ import sequelize from "../config/dbConnection.js"
 const Request = sequelize.define(
   'Request',
   {
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
     visitorName: {
       type: DataTypes.STRING,
       allowNull: false

@@ -1,9 +1,16 @@
 import tourLocation from '../models/tourlocation.js';
+import Tours from '../models/tour.js';
+import Location from '../models/location.js';
 
 // To create a tour-location
 
 export const createATourLocation = async (req, res) => {
-  const { tourId, locationId } = req.body;
+  const tourId = req.body.tourId
+  const locationId = req.body.locationId
+  const tour = await Tours.findOne({ where: { id: tourId } })
+  const location = await Location.findOne({ where: { id: locationId } })
+  if (!location || !tour)
+    return res.status(404).send('Location or Tour is not found, please try again!')
   try {
     const newTourLocation = await tourLocation.create({
       tourId,
