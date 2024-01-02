@@ -6,9 +6,9 @@ const router = express.Router()
 
 router.post('/create', upload.single('image'), createHotel)
 router.get('/read-all', getAllHotels)
-router.get('/read-one', getOneHotel)
-router.get('/read-by-user', getHotelsByUser)
-router.patch('/update', upload.single('image'), updateHotel)
-router.delete('/delete', deleteHotel)
+router.get('/read/:id', getOneHotel)
+router.get('/readByUser/:userId', getHotelsByUser)
+router.patch('/update/:id', upload.single('image'), updateHotel)
+router.delete('/delete/:id', deleteHotel)
 
 export default router
