@@ -50,7 +50,7 @@ const register = async (req, res) => {
     const existingUser = await User.findOne({ where: {email} });
 
     if (existingUser) {
-      res.status(400).json({ error: "Email already exists" });
+      return res.status(400).json({ error: "Email already exists" });
     }
 
     const saltRounds = 10;
@@ -70,7 +70,7 @@ const register = async (req, res) => {
       role:role || "guide",
     });
 
-    const token = jwt.sign({ userId: newUser.id}, process.env.SECRET_TOKEN, { expiresIn: '24h' });
+    const token = jwt.sign({ userId: newUser.id , role:newUser.role}, process.env.SECRET_TOKEN, { expiresIn: '24h' });
     res.cookie('access_token', token, { httpOnly: true, secure: true, sameSite: 'None' });
     
 
