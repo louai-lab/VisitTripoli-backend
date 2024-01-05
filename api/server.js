@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import userRouter from "./routes/user.routes.js";
 import { login } from "./controllers/login.controller.js";
+import { loginWithGoogle } from "./controllers/login.controller.js";
 import { logOut } from "./middleware/auth.js";
 import requestRouter from './routes/request.route.js'
 import hotelRouter from './routes/hotel.routes.js'
@@ -43,6 +44,7 @@ app.use("/images", express.static("images"));
 app.use("/user", userRouter);
 app.use("/tours", toursRoutes);
 app.post("/login", login);
+app.post("/loginWithGoogle", loginWithGoogle)
 app.get("/logout", logOut);
 app.use('/request', requestRouter)
 app.use('/hotel', hotelRouter)
