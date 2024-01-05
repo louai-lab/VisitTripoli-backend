@@ -10,6 +10,7 @@ dotenv.config();
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
+    
   
     try {
   
@@ -26,7 +27,7 @@ export const login = async (req, res) => {
       const passwordMatch = await bcrypt.compare(password, user.password);
   
       if (passwordMatch) {
-        const token = jwt.sign({ userId: user.id }, process.env.SECRET_TOKEN, {
+        const token = jwt.sign({ userId: user.id , role:user.role }, process.env.SECRET_TOKEN, {
           expiresIn: "24h",
         });
 
@@ -40,7 +41,7 @@ export const login = async (req, res) => {
               sameSite: "None",
             })
             .status(200)
-            .json(user);
+            .json({user,token});
             // console.log(user)
         
       } else {

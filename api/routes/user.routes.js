@@ -6,10 +6,10 @@ import { getAllUsers , register , getOneUser , updateUser , deleteUser } from '.
 const userRouter = express.Router();
 
 
-userRouter.get('/',getAllUsers);
+userRouter.get('/', verifyToken , getAllUsers);
 userRouter.get('/oneuser', verifyToken, getOneUser);
-userRouter.patch('/update/:id', upload.single('image') ,updateUser);
-userRouter.delete('/delete/:id', upload.single('image') ,deleteUser);
+userRouter.patch('/update/:id', verifyToken , upload.single('image') ,updateUser);
+userRouter.delete('/delete/:id', verifyToken , upload.single('image') ,deleteUser);
 userRouter.post('/register', upload.single('image') , register)
 
 

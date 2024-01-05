@@ -16,20 +16,19 @@ export const verifyToken = (req, res, next) => {
     req.user = decoded;
 
     console.log(decoded)
-    next(); 
+    req.user = decoded;
 
     // next()
 
 
     // Check if the user is an admin
     if (req.user.role === "admin") {
-      next(); 
+      next(); // User is an admin, proceed to the next middleware or route
     } else {
       return res
         .status(403)
         .json({ message: "Access denied. you have no permission" });
     }
-
   } catch (error) {
     console.log(error);
     res.status(401).json({ error: "Unauthorized - Invalid token" });
