@@ -75,7 +75,7 @@ export const loginWithGoogle = async (req, res, next) => {
         } else {
             /* This is from the user controller */
             const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
-            const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+            const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
             const generatedName = req.body.name.split(" ").join(" ").toLowerCase();
 
               const imagee = req.body.image;
