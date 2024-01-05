@@ -12,7 +12,7 @@ const getAllUsers = async (req, res) => {
   try {
     const users = await User.findAll();
     res.status(201).json(users);
-    console.log(users);
+    // console.log(users);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

@@ -7,6 +7,7 @@ import { loginWithGoogle } from "./controllers/login.controller.js";
 import { logOut } from "./middleware/auth.js";
 import requestRouter from './routes/request.route.js'
 import hotelRouter from './routes/hotel.routes.js'
+import { authenticateUser } from "./middleware/auth.js";
 
 import cookieParser from "cookie-parser";
 
@@ -56,6 +57,13 @@ app.get("/protected-route", verifyToken, (req, res) => {
 
   res.json({ message: "Protected route is working", userId });
 });
+
+
+app.get('/check-login-status', authenticateUser, (req, res) => {
+  // If the request reaches here, it means the user is authenticated
+  res.status(200).json({ message: 'Authenticated' });
+});
+
 
 app.listen(process.env.PORT, () => {
   console.log("listening on port: " + process.env.PORT);
